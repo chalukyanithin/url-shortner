@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/styles.css"/>
+  <%- include('nav') %>
+  <title>URL Shortener</title>
+</head>
+<body>
+  <h1>URL Shortener</h1>
+  <div class="container">
+   <% if (locals.id) { %>
+    <h2>Your Short Link:</h2>
+    <p>
+      URL generated: http://localhost:8000/url/<%= id %>
+    </p>
+  <% } %>
+  <div>
+  <form method="POST" action="/url">
+    <input type="text" name="url" placeholder="http://example.com" required>
+    <button>Generate</button>
+  </form>
+  <form method="get" action="/">
+      <button type="submit">home</button>
+    </form>
+</div>
+
+  <!-- This block only shows when you call res.render('home',{ shortUrl }) -->
+ 
+  <div>
+    <% if (locals.urls) { %>
+        <table>
+            <thead>
+                <th>Sl. no</th>
+                <th>shortid</th>
+                <th>RedirectURLs</th>
+                <th>Clicks</th>
+            </thead>
+            <tbody>
+                <% urls.forEach((url,index) => { %>
+                    <tr>
+                    <td data-label="Sl. no"><%= index+1 %></td>
+                    <td data-label="shortid"><%= url.shortID %></td>
+                    <td data-label="redirectURL"><%= url.redirectURL %></td>
+                    <td data-label="Clicks"><%= url.visitHistory.length %></td>
+                    </tr>
+                 
+                <% }) %>
+            </tbody>
+        </table>
+     
+    <% } %>
+  </div>
+  </div>
+</body>
+</html>
